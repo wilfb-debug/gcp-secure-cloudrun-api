@@ -1,14 +1,21 @@
 from flask import Flask, jsonify
 
+
 app = Flask(__name__)
 
-@app.route("/health", methods=["GET"])
+@app.get("/health")
 def health():
-    return jsonify(status="ok"), 200
+    return {"status": "ok"}
 
-@app.route("/", methods=["GET"])
+@app.get("/")
 def root():
-    return jsonify(message="Secure Cloud Run API is running"), 200
+    return {
+        "service": "gcp-secure-cloudrun-api",
+        "status": "running"
+    }
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    import os
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
+
