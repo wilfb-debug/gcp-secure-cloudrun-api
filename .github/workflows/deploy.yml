@@ -46,7 +46,7 @@ workload_identity_provider: "projects/672198683380/locations/global/workloadIden
           docker push "$IMAGE"
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
-      - name: Deploy to Cloud Run (no public access)
+- name: Deploy to Cloud Run (no public access)
         env:
           REGION: europe-west2
           SERVICE: gcp-secure-cloudrun-api
@@ -56,4 +56,5 @@ workload_identity_provider: "projects/672198683380/locations/global/workloadIden
             --region "$REGION" \
             --platform managed \
             --no-allow-unauthenticated \
-            --port 8080
+            --port 8080 \
+            --min-instances 0
