@@ -80,6 +80,51 @@ No broad “allUsers” access is permitted.
 
 ## Verification Evidence
 
+### Local Development
+Local Flask API running successfully.
+
+![Local Flask Running](screenshots/01-local/local-flask-running.png)
+
+---
+
+### Docker Container
+Application running inside a local Docker container.
+
+![Docker Local Run](screenshots/02-docker/docker-local-run.png)
+
+---
+
+### Cloud Run Deployment
+Service deployed successfully to Cloud Run.
+
+![Cloud Run Service](screenshots/03-cloudrun/cloudrun-service.png)
+
+---
+
+### IAM Security Enforcement
+
+Unauthenticated request blocked (expected behavior).
+
+![Unauthenticated 403](screenshots/04-iam-security/unauthenticated-403.png)
+
+Authenticated request allowed using identity token.
+
+![Authenticated 200](screenshots/04-iam-security/authenticated-200.png)
+
+---
+
+### Artifact Registry
+Container image stored securely in Artifact Registry.
+
+![Artifact Registry Image](screenshots/05-artifact-registry/artifact-image.png)
+
+---
+
+### Architecture Diagram
+High-level secure serverless architecture.
+
+![Architecture Diagram](screenshots/architecture/architecture-diagram.png)
+
 This project includes screenshots proving:
 
 - Local Flask API running
