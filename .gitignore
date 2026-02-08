@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Terraform
 **/.terraform/*
 *.tfstate
@@ -9,4 +10,13 @@ crash.*.log
 .terraform.lock.hcl
 
 # Local outputs
+=======
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+>>>>>>> c6a72c2 (chore: ignore terraform build/state files)
 outputs.txt
