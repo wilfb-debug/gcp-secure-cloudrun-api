@@ -139,6 +139,159 @@ Screenshots are stored in `./screenshots/`.
 
 ---
 
+## Security Architecture & Controls
+#### Security Objectives
+
+This project is designed to demonstrate a secure-by-default serverless API architecture on Google Cloud, with a strong emphasis on:
+
+- Zero public exposure
+- Strong identity-based access control
+- Secretless CI/CD
+- Least-privilege permissions
+- Cost-safe operations and clean teardown
+
+The architecture intentionally avoids common anti-patterns such as public Cloud Run services, long-lived service account keys, and over-privileged CI/CD pipelines.
+
+#### Threat Model
+
+The design assumes the following realistic threats:
+- Attackers discovering the Cloud Run service URL and attempting direct access
+- Accidental public exposure of APIs via misconfiguration
+- Leakage of CI/CD credentials or service account keys
+- Unauthorized deployments from compromised or untrusted pipelines
+- Supply-chain risks during container build and deployment
+  
+All security controls are implemented to mitigate these risks.
+
+#### Cloud Run Access Control (Private by Default)
+Decision:
+
+- The Cloud Run service is deployed without unauthenticated access.
+
+Implementation:
+
+- --no-allow-unauthenticated is enforced at deploy time
+- Requests without a valid identity token return HTTP 403 Forbidden
+
+Security Benefit:
+
+- The service URL alone is useless to an attacker
+- Prevents accidental public API exposure
+- Enforces identity before any application logic is reached
+
+Verification:
+
+- Unauthenticated request → 403 Forbidden
+- Authenticated request with valid identity token → 200 OK
+
+#### IAM-Based Authorization (Least Privilege)
+Decision:
+
+- Access to invoke the Cloud Run service is controlled using IAM.
+
+Implementation:
+
+- Only principals with roles/run.invoker can call the service
+- No wildcard or project-wide permissions are granted
+
+Security Benefit:
+
+- Authentication proves who you are
+- IAM determines what you are allowed to do
+- Prevents lateral access by authenticated but unauthorized identities
+
+#### Workload Identity Federation for CI/CD (No Secrets)
+Decision:
+
+- GitHub Actions authenticates to Google Cloud using OIDC Workload Identity Federation, not service account keys.
+
+Implementation:
+
+- GitHub Actions issues a short-lived OIDC token
+- Google Cloud exchanges the token for temporary credentials
+- No JSON keys are stored in GitHub Secrets
+
+Security Benefit:
+
+- Eliminates long-lived credentials entirely
+- Tokens are short-lived and automatically rotated
+- Stolen pipeline logs cannot be reused for access
+
+#### Repository-Scoped Trust Policy
+Decision:
+
+- The Workload Identity Provider only trusts a single GitHub repository.
+
+Implementation:
+
+- Attribute conditions restrict federation to:
+-- repository = wilfb-debug/gcp-secure-cloudrun-api
+- Requests from other repositories are rejected
+
+Security Benefit:
+
+- Prevents identity reuse from forked or malicious repositories
+- Ensures only the intended pipeline can deploy infrastructure
+- Enforces strong provenance of deployments
+
+#### Secure Container Supply Chain
+Decision:
+
+- Container images are built and stored in Artifact Registry, then deployed to Cloud Run.
+
+Implementation:
+
+- Images are versioned and immutable
+- Cloud Run pulls images directly from Artifact Registry
+- No inline builds on the runtime environment
+
+Security Benefit:
+
+- Clear separation between build and runtime
+- Enables auditing, rollback, and future signing/scanning
+- Reduces risk of runtime tampering
+
+#### Cost and Operational Safety
+Decision:
+
+- The project is intentionally designed to be cost-safe.
+
+Implementation:
+
+- Cloud Run services can be fully deleted when idle
+- Artifact Registry repositories are removable after use
+- No always-on compute resources
+
+Security Benefit:
+
+- Prevents cost leakage
+- Encourages clean lifecycle management
+- Reduces attack surface when not actively in use
+
+#### Security Posture Summary
+This architecture demonstrates:
+
+- Zero public endpoints
+- Identity-first access control
+- Secretless CI/CD
+- Least privilege IAM
+- Auditable container delivery
+- Operational cost discipline
+
+It reflects production-grade security principles suitable for regulated and enterprise environments.
+
+#### Future Hardening (Out of Scope)
+
+If extended further, the architecture could include:
+
+- Container image signing (Cosign / SLSA)
+- Vulnerability scanning and policy enforcement
+- Infrastructure as Code (Terraform)
+- Centralized logging, metrics, and alerting
+- Multi-region or compliance-driven deployments
+
+---
+
 ## Operations Runbook
 
 ### Deploy (high level)
