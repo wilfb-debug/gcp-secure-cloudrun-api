@@ -1,12 +1,11 @@
 terraform {
-  required_version = ">= 1.4.0"
-
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = ">= 5.0"
+      version = "~> 7.18"
     }
   }
+
 }
 
 provider "google" {
@@ -14,4 +13,6 @@ provider "google" {
   region  = var.region
 }
 
-data "google_project" "current" {}
+data "google_project" "current" {
+  project_id = var.project_id
+}
