@@ -7,10 +7,6 @@ app = Flask(__name__)
 def root():
     return {"status": "Sentinal API running"}
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
 
 import os
 
