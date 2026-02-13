@@ -1,12 +1,14 @@
 from flask import Flask, jsonify
 
-
 app = Flask(__name__)
 
 @app.route("/")
 def root():
     return {"status": "Sentinal API running"}
 
+@app.route("/health")
+def health():
+    return {"status": "ok"}
 
 import os
 
