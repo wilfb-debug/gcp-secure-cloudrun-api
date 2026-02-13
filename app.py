@@ -11,12 +11,6 @@ def root():
 def health():
     return {"status": "ok"}
 
-@app.get("/")
-def root():
-    return {
-        "service": "gcp-secure-cloudrun-api",
-        "status": "running"
-    }
 
 import os
 
