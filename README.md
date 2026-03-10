@@ -1,5 +1,8 @@
 # Secure Cloud Run API on Google Cloud (IAM-Protected)
 
+## Architecture Overview
+This solution uses a serverless architecture built around Cloud Run and Artifact Registry.
+
 ## Overview
 This project demonstrates how to design, deploy, and secure a containerised API on Google Cloud Run using modern cloud-native security principles.
 
@@ -10,9 +13,6 @@ The focus is on:
 - Cost-efficient, production-ready design
 
 ---
-
-## Architecture Overview
-This solution uses a serverless architecture built around Cloud Run and Artifact Registry.
 
 High-level components:
 - Flask API (Python)
