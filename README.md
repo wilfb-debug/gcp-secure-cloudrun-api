@@ -1,5 +1,10 @@
 # Secure Cloud Run API on Google Cloud (IAM-Protected)
 
+## Architecture Diagram
+> Diagram created using Lucidchart (Google Cloud official icons)
+
+![Architecture Diagram](screenshots/architecture/architecture-diagram.png)
+
 ## Architecture Overview
 This solution uses a serverless architecture built around Cloud Run and Artifact Registry.
 
@@ -20,13 +25,6 @@ High-level components:
 - Artifact Registry
 - Cloud Run (fully managed)
 - IAM (Identity & Access Management)
-
----
-
-## Architecture Diagram
-> Diagram created using Lucidchart (Google Cloud official icons)
-
-![Architecture Diagram](screenshots/architecture/architecture-diagram.png)
 
 ---
 
