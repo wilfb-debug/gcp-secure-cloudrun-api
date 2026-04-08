@@ -1,4 +1,9 @@
-# Secure Cloud Run API on Google Cloud (IAM-Protected)
+# Secure Cloud Run API on GCP (IAM-Protected)
+
+[![CI](https://github.com/wilfb-debug/gcp-secure-cloudrun-api/actions/workflows/ci.yml/badge.svg)](https://github.com/wilfb-debug/gcp-secure-cloudrun-api/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-1.5+-844FBA?logo=terraform&logoColor=white)
+![GCP](https://img.shields.io/badge/GCP-Cloud_Run-4285F4?logo=googlecloud&logoColor=white)
 
 ## Architecture Diagram
 > Diagram created using Lucidchart (Google Cloud official icons)
